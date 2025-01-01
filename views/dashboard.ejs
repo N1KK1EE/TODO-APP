@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Your Tasks</h1>
+  <ul>
+    <% tasks.forEach(task => { %>
+      <li>
+        <%= task.title %> - <%= task.status %>
+        <form method="POST" action="/tasks/update/<%= task._id %>">
+          <button type="submit" name="status" value="completed">Complete</button>
+          <button type="submit" name="status" value="deleted">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+  <form method="POST" action="/tasks">
+    <input type="text" name="title" placeholder="Task Title" required>
+    <textarea name="description" placeholder="Task Description" required></textarea>
+    <button type="submit">Add Task</button>
+  </form>
+</body>
+</html>
