@@ -3,6 +3,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const dotenv = require('dotenv');
+dotenv.config();
 
 // User Signup
 router.get('/signup', (req, res) => {

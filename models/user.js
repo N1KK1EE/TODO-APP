@@ -1,52 +1,54 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const morgan = require('morgan');
-const path = require('path');
-const dotenv = require('dotenv');
-const connectMongo = require('connect-mongo');
-dotenv.config();
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const session = require('express-session');
+// const morgan = require('morgan');
+// const path = require('path');
+// const dotenv = require('dotenv');
+// const connectMongo = require('connect-mongo');
+// const authRoutes = require('../routes/auth');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// dotenv.config();
 
-// Middlewares
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'public')));
+// const app = express();
+// const PORT = process.env.PORT || 3000;
 
-// Session Setup
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  store: connectMongo.create({
-    mongoUrl: process.env.MONGO_URI
-  })
-}));
+// // Middlewares
+// app.use(morgan('dev'));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+// app.set('view engine', 'ejs');
+// app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-const authRoutes = require('./routes/auth');
-const taskRoutes = require('./routes/task');
+// // Session Setup
+// app.use(session({
+//   secret: process.env.,
+//   resave: false,
+//   saveUninitialized: true,
+//   store: connectMongo.create({
+//     mongoUrl: process.env.MONGO_URI
+//   })
+// }));
 
-app.use('/', authRoutes);
-app.use('/tasks', taskRoutes);
+// // Routes
+// const authRoutes = require('./routes/auth');
+// const taskRoutes = require('./routes/task');
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log("Connected to MongoDB"))
-  .catch(err => console.log(err));
+// app.use('/', authRoutes);
+// app.use('/tasks', taskRoutes);
 
-// Global error handling
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send('Something went wrong!');
-});
+// // Connect to MongoDB
+// mongoose.connect(process.env.MONGO_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }).then(() => console.log("Connected to MongoDB"))
+//   .catch(err => console.log(err));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// // Global error handling
+// app.use((err, req, res, next) => {
+//   console.error(err);
+//   res.status(500).send('Something went wrong!');
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

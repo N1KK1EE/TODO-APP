@@ -5,6 +5,9 @@ const morgan = require('morgan');
 const path = require('path');
 const dotenv = require('dotenv');
 const connectMongo = require('connect-mongo');
+const authRoutes = require('./routes/auth');
+const taskRoutes = require('./routes/task');
+
 dotenv.config();
 
 const app = express();
@@ -19,17 +22,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Session Setup
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: true,
   store: connectMongo.create({
     mongoUrl: process.env.MONGO_URI
   })
 }));
-
-// Routes
-const authRoutes = require('./routes/auth');
-const taskRoutes = require('./routes/task');
 
 app.use('/', authRoutes);
 app.use('/tasks', taskRoutes);
