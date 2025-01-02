@@ -40,4 +40,12 @@ router.post('/update/:id', isAuthenticated, async (req, res) => {
   res.redirect('/tasks');
 });
 
+// Delete task
+router.post('/delete/:id', isAuthenticated, async (req, res) => {
+  const task = await Task.findById(req.params.id);
+  task.status = 'deleted';
+  await task.save();
+  res.redirect('/tasks');
+});
+
 module.exports = router;
