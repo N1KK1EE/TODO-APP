@@ -4,7 +4,8 @@ const session = require('express-session');
 const morgan = require('morgan');
 const path = require('path');
 const dotenv = require('dotenv');
-const connectMongo = require('connect-mongo');
+const mongoStore = require('connect-mongo');
+const connectDB = require('./config/db')
 const authRoutes = require('./routes/auth');
 const taskRoutes = require('./routes/task');
 
@@ -25,8 +26,8 @@ app.use(session({
   secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: true,
-  store: connectMongo.create({
-    mongoUrl: process.env.MONGO_URI
+  store: mongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
   })
 }));
 
@@ -35,8 +36,8 @@ app.use('/tasks', taskRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
 }).then(() => console.log("Connected to MongoDB"))
   .catch(err => console.log(err));
 
